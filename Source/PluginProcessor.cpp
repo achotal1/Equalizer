@@ -101,6 +101,7 @@ void EqualizerAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     spec.numChannels = 1;
     leftChain.prepare(spec);
     rightChain.prepare(spec);
+    
 
 }
 
@@ -156,9 +157,8 @@ void EqualizerAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     auto rightBlock = block.getSingleChannelBlock(1);
     juce::dsp::ProcessContextReplacing<float> leftContext(leftBlock);
     juce::dsp::ProcessContextReplacing<float> rightContext(rightBlock);
-    leftChain.process(leftBlock);
-    rightChain.process(rightBlock);
-
+    leftChain.process(leftContext);
+    rightChain.process(rightContext);  
 
     // This is the place where you'd normally do the guts of your plugin's
     // audio processing...
